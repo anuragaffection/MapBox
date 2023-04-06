@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MapOne</string>
+    <string name="mapbox_access_token">pk.eyJ1IjoiYW51cmFnYWZmZWN0aW9uIiwiYSI6ImNsZzU4am83aTAxMzEzdXBkMWd2cDU1OXMifQ.S0czjF8a3wnEblw5pt69_Q</string>
+
 </resources>
