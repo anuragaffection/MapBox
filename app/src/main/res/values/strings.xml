@@ -1,5 +1,12 @@
 <resources>
     <string name="app_name">MapOne</string>
     <string name="mapbox_access_token">pk.eyJ1IjoiYW51cmFnYWZmZWN0aW9uIiwiYSI6ImNsZzU4am83aTAxMzEzdXBkMWd2cDU1OXMifQ.S0czjF8a3wnEblw5pt69_Q</string>
+    <string name="outdoorView">Outdoor View</string>
+    <string name="trafficView">Traffic View</string>
+    <string name="streetView">Street View</string>
+    <string name="satelliteView">Satellite View</string>
+    <string name="latitude">Latitude</string>
+    <string name="longitude">Longitude</string>
+    <string name="delete">Delete</string>
 
 </resources>

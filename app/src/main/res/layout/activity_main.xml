@@ -7,13 +7,73 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:rowCount="1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/mapView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+
+            <ImageButton
+                android:id="@+id/outdoorView"
+                android:layout_height="match_parent"
+                android:layout_width="62dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="10dp"
+                android:contentDescription="@string/outdoorView"
+                android:src="@drawable/baseline_camera_outdoor_24"
+                />
+
+
+            <ImageButton
+                android:id="@+id/satelliteView"
+                android:layout_height="match_parent"
+                android:layout_width="62dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="10dp"
+                android:contentDescription="@string/satelliteView"
+                android:src="@drawable/baseline_satellite_alt_24"
+                />
+
+
+            <ImageButton
+                android:id="@+id/streetView"
+                android:layout_height="match_parent"
+                android:layout_width="62dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="10dp"
+                android:contentDescription="@string/streetView"
+                android:src="@drawable/baseline_streetview_24"
+                />
+
+
+            <ImageButton
+                android:id="@+id/trafficView"
+                android:layout_height="match_parent"
+                android:layout_width="62dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="10dp"
+                android:contentDescription="@string/trafficView"
+                android:src="@drawable/baseline_traffic_24"
+                />
+
+
+
+    </GridLayout>
+
+
+
     <com.mapbox.maps.MapView
         xmlns:mapbox="http://schemas.android.com/apk/res-auto"
         android:id="@+id/mapView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        mapbox:mapbox_cameraTargetLat="40.7128"
-        mapbox:mapbox_cameraTargetLng="-74.0060"
+        android:layout_marginTop="59sp"
+        mapbox:mapbox_cameraTargetLat="28.6942"
+        mapbox:mapbox_cameraTargetLng="77.2646"
         mapbox:mapbox_cameraZoom="9.0"
         />
 
