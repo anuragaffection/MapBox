@@ -20,7 +20,6 @@ import com.google.gson.JsonElement
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapView
-import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
 import com.mapbox.maps.plugin.annotation.AnnotationConfig
 import com.mapbox.maps.plugin.annotation.AnnotationPlugin
@@ -76,10 +75,15 @@ class MainActivity : AppCompatActivity(){
         }
 
 
+        val homeView :ImageButton = findViewById(R.id.homeView)
         val outdoorView :ImageButton = findViewById(R.id.outdoorView)
         val satelliteView :ImageButton = findViewById(R.id.satelliteView)
         val streetView :ImageButton = findViewById(R.id.streetView)
         val trafficView :ImageButton = findViewById(R.id.trafficView)
+
+        homeView.setOnClickListener {
+            mapView?.getMapboxMap()?.loadStyleUri(Style.MAPBOX_STREETS)
+        }
 
         outdoorView.setOnClickListener {
             mapView?.getMapboxMap()?.loadStyleUri(Style.OUTDOORS)
@@ -98,10 +102,7 @@ class MainActivity : AppCompatActivity(){
         }
 
 
-
-
     }
-
 
 
 
