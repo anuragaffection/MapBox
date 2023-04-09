@@ -8,6 +8,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -31,6 +32,7 @@
                 android:padding="10dp"
                 />
 
+
             <TextView
                 android:id="@+id/viewLongitude"
                 android:text="@string/longitude"
@@ -41,16 +43,39 @@
                 android:padding="10dp"
                 />
 
-            <Button
-                android:id="@+id/btnDelete"
-                android:text="@string/delete"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textSize="20sp"
-                android:padding="10dp"
-                android:backgroundTint="@color/red"
-               />
+                android:orientation="horizontal"
+                >
+
+
+                <Button
+                    android:id="@+id/btnDelete"
+                    android:text="@string/delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:padding="10dp"
+                    android:layout_margin="10dp"
+                    android:backgroundTint="@color/red"
+                     />
+
+                <Button
+                    android:id="@+id/btnCancel"
+                    android:text="@string/cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:padding="10dp"
+                    android:layout_margin="10dp"
+                    android:backgroundTint="@color/purple_700"
+                     />
+
+
+            </LinearLayout>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

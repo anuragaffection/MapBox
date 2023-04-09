@@ -18,6 +18,16 @@
         >
 
             <ImageButton
+                android:id="@+id/homeView"
+                android:layout_height="match_parent"
+                android:layout_width="62dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="10dp"
+                android:contentDescription="@string/homeview"
+                android:src="@drawable/baseline_home_24"
+                />
+
+            <ImageButton
                 android:id="@+id/outdoorView"
                 android:layout_height="match_parent"
                 android:layout_width="62dp"
@@ -26,7 +36,6 @@
                 android:contentDescription="@string/outdoorView"
                 android:src="@drawable/baseline_camera_outdoor_24"
                 />
-
 
             <ImageButton
                 android:id="@+id/satelliteView"
@@ -46,7 +55,7 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginStart="10dp"
                 android:contentDescription="@string/streetView"
-                android:src="@drawable/baseline_streetview_24"
+                android:src="@drawable/baseline_edit_road_24"
                 />
 
 
@@ -60,10 +69,7 @@
                 android:src="@drawable/baseline_traffic_24"
                 />
 
-
-
     </GridLayout>
-
 
 
     <com.mapbox.maps.MapView

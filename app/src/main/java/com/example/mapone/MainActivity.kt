@@ -1,16 +1,18 @@
 package com.example.mapone
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.widget.Button
 import android.widget.ImageButton
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.DrawableRes
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import com.google.gson.Gson
@@ -25,28 +27,25 @@ import com.mapbox.maps.plugin.annotation.AnnotationPlugin
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.*
 import com.mapbox.maps.plugin.gestures.gestures
-import com.mapbox.maps.viewannotation.ViewAnnotationManager
-import com.mapbox.maps.viewannotation.viewAnnotationOptions
 import org.json.JSONObject
 
 
 var mapView: MapView? = null
-
 var annotationApi : AnnotationPlugin? = null
+
 lateinit var annotationConfig : AnnotationConfig
+
 const val layerID = "map_annotation"
+
 var pointAnnotationManager : PointAnnotationManager? = null
 var markerList :ArrayList<PointAnnotationOptions> = ArrayList()
-
-private lateinit var mapboxMap: MapboxMap
-private lateinit var viewAnnotationManager: ViewAnnotationManager
-
 
 var latitudeList : ArrayList<Double> = ArrayList()
 var longitudeList : ArrayList<Double> = ArrayList()
 
 
-class MainActivity : AppCompatActivity() {
+
+class MainActivity : AppCompatActivity(){
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,17 +53,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         mapView = findViewById(R.id.mapView)
-
-
         createLatLongForMarker()
 
         mapView?.getMapboxMap()?.loadStyleUri(Style.MAPBOX_STREETS) {
             zoomCamera()
             addAnnotationToMap()
-            displayMessage()
-
 
             annotationApi = mapView?.annotations
+
             annotationConfig = AnnotationConfig(
                 layerId = layerID
             )
@@ -78,7 +74,6 @@ class MainActivity : AppCompatActivity() {
                 e.printStackTrace()
             }
         }
-
 
 
         val outdoorView :ImageButton = findViewById(R.id.outdoorView)
@@ -104,7 +99,10 @@ class MainActivity : AppCompatActivity() {
 
 
 
+
     }
+
+
 
 
     private fun addAnnotationToMap() {
@@ -121,6 +119,7 @@ class MainActivity : AppCompatActivity() {
             pointAnnotationManager?.create(pointAnnotationOptions)
         }
     }
+
 
     private fun bitmapFromDrawableRes(context: Context, @DrawableRes resourceId: Int) =
         convertDrawableToBitmap(AppCompatResources.getDrawable(context, resourceId))
@@ -148,21 +147,6 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun displayMessage (){
-        mapView?.setOnClickListener {
-            Toast.makeText(applicationContext, "Clicked ",Toast.LENGTH_LONG).show()
-        }
-    }
-
-    private fun zoomCamera(){
-        mapView!!.getMapboxMap().setCamera(
-            CameraOptions.Builder()
-                .center(Point.fromLngLat(	77.216721,28.644800))
-                .zoom(11.0)
-                .build()
-        )
-    }
-
 
     private fun createLatLongForMarker(){
         latitudeList.add(27.176670)
@@ -174,30 +158,51 @@ class MainActivity : AppCompatActivity() {
         latitudeList.add(28.9676)
         longitudeList.add(76.0534)
 
+        latitudeList.add(27.276670)
+        longitudeList.add(78.708072)
+
+        latitudeList.add( 28.835517)
+        longitudeList.add( 77.791029)
+
+        latitudeList.add(28.0676)
+        longitudeList.add(76.8534)
+
     }
+
+
+    private fun zoomCamera(){
+        mapView!!.getMapboxMap().setCamera(
+            CameraOptions.Builder()
+                .center(Point.fromLngLat(	77.216721,28.644800))
+                .zoom(11.0)
+                .build()
+        )
+    }
+
 
 
     private fun createMarkerList(){
 
         clearAnnotation()
 
-        pointAnnotationManager?.addClickListener(OnPointAnnotationClickListener { annotation: PointAnnotation ->
-            onMarkerItemClick(annotation)
-            true
+        pointAnnotationManager?.addClickListener(OnPointAnnotationClickListener {
+                annotation: PointAnnotation ->
+                onMarkerItemClick(annotation)
+                true
         })
 
-
         markerList =  ArrayList()
+
         val bitmap = convertDrawableToBitmap(AppCompatResources.getDrawable(this, R.drawable.red_marker))
 
-        for (i in 0 until  3){
+        for (i in 0 until  6){
 
-            val mObe = JSONObject()
-            mObe.put("someKey",i)
+            val mObject = JSONObject()
+            mObject.put("Index", i)
 
             val pointAnnotationOptions: PointAnnotationOptions = PointAnnotationOptions()
                 .withPoint(Point.fromLngLat(longitudeList[i], latitudeList[i]))
-                .withData(Gson().fromJson(mObe.toString(), JsonElement::class.java))
+                .withData(Gson().fromJson(mObject.toString(), JsonElement::class.java))
                 .withIconImage(bitmap!!)
 
             markerList.add(pointAnnotationOptions)
@@ -205,6 +210,7 @@ class MainActivity : AppCompatActivity() {
         pointAnnotationManager?.create(markerList)
 
     }
+
 
     private fun clearAnnotation(){
         markerList = ArrayList()
@@ -216,32 +222,30 @@ class MainActivity : AppCompatActivity() {
 
         val jsonElement: JsonElement? = marker.getData()
 
-        AlertDialog.Builder(this)
-            .setTitle("Marker Click")
-            .setMessage("Here is the value-- "+jsonElement.toString())
-            .setPositiveButton("OK") {
-                    dialog, _ -> dialog.dismiss()
-            }
-            .setNegativeButton("Cancel") {
-                    dialog, _ -> dialog.dismiss() }
-            .show()
+        val dialog = Dialog(this@MainActivity)
+        dialog.setContentView(R.layout.marker_details)
+        dialog.setCancelable(false)
 
+        val viewLatitude = dialog.findViewById<TextView>(R.id.viewLatitude)
+        val viewLongitude = dialog.findViewById<TextView>(R.id.viewLongitude)
+        val btnDelete = dialog.findViewById<Button>(R.id.btnDelete)
+        val btnCancel = dialog.findViewById<Button>(R.id.btnCancel)
+
+        viewLatitude.text = "Latitude = " + jsonElement.toString()
+        viewLongitude.text = "Longitude = " + jsonElement.toString()
+
+        btnCancel.setOnClickListener {
+            Toast.makeText(this@MainActivity, "It is safe", Toast.LENGTH_LONG).show()
+            dialog.dismiss()
+        }
+        btnDelete.setOnClickListener {
+            clearAnnotation()
+            dialog.dismiss()
+        }
+        dialog.show()
     }
 
-    private fun addViewAnnotation(point: Point) {
 
-        val viewAnnotationManager = binding.mapView.viewAnnotationManager
-
-        val viewAnnotation = viewAnnotationManager.addViewAnnotation(
-
-            resId = R.layout.marker_details,
-
-            options = viewAnnotationOptions {
-                geometry(point)
-            }
-        )
-        AnnotationViewBinding.bind(viewAnnotation)
-    }
 
 
 
